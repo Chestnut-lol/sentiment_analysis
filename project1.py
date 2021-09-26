@@ -313,7 +313,6 @@ def extract_words(input_string):
 
     return input_string.lower().split()
 
-
 def bag_of_words(texts):
     """
     Inputs a list of string reviews
@@ -323,10 +322,12 @@ def bag_of_words(texts):
     """
     # Your code here
     dictionary = {} # maps word to unique index
+    with open("stopwords.txt","r") as f:
+        stopwords = f.read().split("\n")
     for text in texts:
         word_list = extract_words(text)
         for word in word_list:
-            if word not in dictionary:
+            if word not in dictionary and word not in stopwords:
                 dictionary[word] = len(dictionary)
     return dictionary
 
