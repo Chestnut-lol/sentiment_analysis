@@ -170,4 +170,4 @@ def most_negative_word(theta,wordlist):
     """Returns the word associated with the bag-of-words feature having smallest weight."""
     return [word for (theta_i, word) in sorted(zip(theta, wordlist))]
 
-    
+

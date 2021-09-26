@@ -11,7 +11,7 @@ def get_order(n_samples):
             line = fp.readline()
             return list(map(int, line.split(',')))
     except FileNotFoundError:
-        random.seed(1)
+        random.seed(0)
         indices = list(range(n_samples))
         random.shuffle(indices)
         return indices
@@ -161,7 +161,7 @@ def average_perceptron(feature_matrix, labels, T):
             theta,theta_0 = perceptron_single_step_update(feature_matrix[i],labels[i],theta,theta_0)
             sum_th += theta
             sum_th0 += theta_0
-    return (sum_th/(n*T),theta_0/(n*T))
+    return (sum_th/(n*T),sum_th0/(n*T))
 
 
 def pegasos_single_step_update(
@@ -260,7 +260,7 @@ def classify(feature_matrix, theta, theta_0):
     be considered a positive classification.
     """
     # Your code here
-    raise NotImplementedError
+    return np.where(feature_matrix@theta+theta_0 > 0,1,-1)
 
 
 def classifier_accuracy(
@@ -296,7 +296,9 @@ def classifier_accuracy(
     accuracy of the trained classifier on the validation data.
     """
     # Your code here
-    raise NotImplementedError
+    theta,theta_0 = classifier(train_feature_matrix,train_labels,**kwargs)
+    return (accuracy(classify(train_feature_matrix,theta,theta_0),train_labels),accuracy(classify(val_feature_matrix,theta,theta_0),val_labels))
+
 
 
 def extract_words(input_string):
